@@ -47,7 +47,7 @@ function checkInternet() {
             extensionOpenedTabId = tab.id;
 
             // Set a timeout to reset the login attempt flag
-            setTimeout(resetLoginAttempt, 30000); // 30 seconds timeout
+            setTimeout(resetLoginAttempt, 300000); // 30 seconds timeout
         });
     });
 }
