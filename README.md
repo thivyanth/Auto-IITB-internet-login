@@ -17,7 +17,7 @@ To install this extension in Chrome:
 4. Click 'Load unpacked' and select the extracted folder of this repository.
 
 ## Usage
-Once installed, the extension runs automatically. It checks for an active university network connection every 5 seconds. If the connection is lost, it opens the login page. Upon successful login, the extension automatically closes the login tab. (keep SSO logged in)
+Once installed, the extension runs automatically. It checks for an active university network connection every 60 seconds. If the connection is lost, it opens the login page. Upon successful login, the extension automatically closes the login tab. (keep SSO logged in)
 
 ## Files
 - `manifest.json`: Contains extension metadata and configuration settings.
@@ -36,7 +36,7 @@ Contributions to this project are welcome. Please submit a pull request or creat
 [MIT License](LICENSE)
 
 ## Contact
-For any queries regarding this extension, please reach out to [Your Contact Information].
+For any queries regarding this extension, please reach out to [Don't contact].
 
 ## Acknowledgments
 - University IT Department for the network infrastructure.
