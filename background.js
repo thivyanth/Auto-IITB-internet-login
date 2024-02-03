@@ -53,7 +53,7 @@ function checkInternet() {
 }
 
 // Set up an alarm to check university network connectivity
-chrome.alarms.create('checkUniversityNetwork', { periodInMinutes: (1/60)*30 });
+chrome.alarms.create('checkUniversityNetwork', { periodInMinutes: (1/60)*60 });
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === 'checkUniversityNetwork') {
         checkUniversityNetwork();
