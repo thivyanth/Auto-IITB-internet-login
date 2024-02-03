@@ -1,14 +1,22 @@
 let extensionOpenedTabId = null;
+let isAttemptingLogin = false;
 
 chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action === "loggedIn" && sender.tab) {
         if (sender.tab.id === extensionOpenedTabId) {
             console.log('Logged in successfully, closing tab.');
             chrome.tabs.remove(sender.tab.id);
-            extensionOpenedTabId = null; // Reset the variable as the tab is now closed
+            extensionOpenedTabId = null;
+            isAttemptingLogin = false;
         }
     }
 });
+
+function resetLoginAttempt() {
+    isAttemptingLogin = false;
+    extensionOpenedTabId = null;
+    console.log('Resetting login attempt flag due to timeout or user action.');
+}
 
 function checkUniversityNetwork() {
     fetch('https://internet.iitb.ac.in/', { mode: 'no-cors' })
@@ -18,18 +26,28 @@ function checkUniversityNetwork() {
     })
     .catch(() => {
         console.log('Not on university network, extension functionality is inactive.');
+        resetLoginAttempt();
     });
 }
 
 function checkInternet() {
+    if (isAttemptingLogin) {
+        console.log('Login attempt already in progress.');
+        return;
+    }
+
     fetch('https://www.google.com', { mode: 'no-cors' })
     .then(() => {
-        // No need to check if the login tab is open, as the content script handles it
+        isAttemptingLogin = false;
     })
     .catch(() => {
         console.log('Internet disconnected, navigating to login page');
+        isAttemptingLogin = true;
         chrome.tabs.create({url: 'https://internet.iitb.ac.in/login.php'}, (tab) => {
-            extensionOpenedTabId = tab.id; // Store the ID of the tab opened by the extension
+            extensionOpenedTabId = tab.id;
+
+            // Set a timeout to reset the login attempt flag
+            setTimeout(resetLoginAttempt, 30000); // 30 seconds timeout
         });
     });
 }
@@ -39,5 +57,12 @@ chrome.alarms.create('checkUniversityNetwork', { periodInMinutes: 1/12 });
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === 'checkUniversityNetwork') {
         checkUniversityNetwork();
+    }
+});
+
+// Listener for tab closure, to reset the login attempt flag if the user closes the tab manually
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+    if (tabId === extensionOpenedTabId) {
+        resetLoginAttempt();
     }
 });
