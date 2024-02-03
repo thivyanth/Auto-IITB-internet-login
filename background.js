@@ -6,6 +6,17 @@ chrome.runtime.onMessage.addListener(function(request, sender) {
   }
 });
 
+function checkUniversityNetwork() {
+  fetch('https://internet.iitb.ac.in/', { mode: 'no-cors' })
+  .then(() => {
+      console.log('On university network, activating extension functionality.');
+      checkInternet();
+  })
+  .catch(() => {
+      console.log('Not on university network, extension functionality is inactive.');
+  });
+}
+
 function checkInternet() {
   fetch('https://www.google.com', { mode: 'no-cors' })
   .then(() => {
@@ -17,14 +28,10 @@ function checkInternet() {
   });
 }
 
-// ... rest of the background.js script
-
-
-// Set up an alarm to check internet connectivity every 5 seconds
-chrome.alarms.create('checkInternet', { periodInMinutes: 1 / 12 });
-
+// Set up an alarm to check university network connectivity
+chrome.alarms.create('checkUniversityNetwork', { periodInMinutes: 1/12 });
 chrome.alarms.onAlarm.addListener((alarm) => {
-if (alarm.name === 'checkInternet') {
-  checkInternet();
-}
+  if (alarm.name === 'checkUniversityNetwork') {
+    checkUniversityNetwork();
+  }
 });
