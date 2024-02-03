@@ -1,13 +1,16 @@
 {
-    "manifest_version": 3,
-    "name": "Auto Network Login",
-    "version": "1.0",
-    "description": "Automatically navigates to the university login page when the internet is disconnected.",
-    "permissions": [
-      "tabs", "alarms", "storage"
-    ],
-    "background": {
-      "service_worker": "background.js"
+  "manifest_version": 3,
+  "name": "Auto Network Login",
+  "version": "1.0",
+  "description": "Automatically navigates to the university login page when the internet is disconnected.",
+  "permissions": ["tabs", "alarms", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://internet.iitb.ac.in/*"],
+      "js": ["content.js"]
     }
-  }
-  
+  ]
+}
