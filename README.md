@@ -17,7 +17,7 @@ To install this extension in Chrome:
 4. Click 'Load unpacked' and select the extracted folder of this repository.
 
 ## Usage
-Once installed, the extension runs automatically. It checks for an active university network connection every 5 seconds. If the connection is lost, it opens the login page. Upon successful login, the extension automatically closes the login tab.
+Once installed, the extension runs automatically. It checks for an active university network connection every 5 seconds. If the connection is lost, it opens the login page. Upon successful login, the extension automatically closes the login tab. (keep SSO logged in)
 
 ## Files
 - `manifest.json`: Contains extension metadata and configuration settings.
@@ -27,6 +27,7 @@ Once installed, the extension runs automatically. It checks for an active univer
 ## Known Issues
 - The extension assumes `https://internet.iitb.ac.in/` is only accessible within the university network.
 - Frequent checks for internet connectivity may consume additional resources.
+- Opens two tabs and closes only one at times.
 
 ## Contributing
 Contributions to this project are welcome. Please submit a pull request or create an issue for any bugs or feature suggestions.
