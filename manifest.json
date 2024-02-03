@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Auto Network Login",
+    "version": "1.0",
+    "description": "Automatically navigates to the university login page when the internet is disconnected.",
+    "permissions": [
+      "tabs", "alarms", "storage"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    }
+  }
+  
